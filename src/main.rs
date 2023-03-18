@@ -1,6 +1,9 @@
 use std::net::SocketAddr;
 use axum::{routing::get, Router, Server};
+use axum::routing::{IntoMakeService, MethodRouter};
+use context::AxumRunner;
 
+mod context;
 mod domain;
 use domain::account;
 
@@ -8,12 +11,11 @@ use domain::account;
 async fn main() {
     // Set Default Router, Addr
     let addr = SocketAddr::from(([127, 0, 0, 1], 3000));
-    let router = get_router();
 
-    Server::bind(&addr)
-        .serve(router.into_make_service())
-        .await
-        .unwrap();
+    AxumRunner::new(addr)
+        .add_route("/", get(root))
+        .add_route("/status", get(account::controller::accountcontroller::get_status))
+        .run().await;
 }
 
 fn get_router() -> Router {
