@@ -12,5 +12,6 @@ pub fn return_as_is(_attr: TokenStream, item: TokenStream) -> TokenStream {
 pub fn route(_attr: TokenStream, item: TokenStream) -> TokenStream {
     println!("attr: \"{}\"", _attr.to_string());
     println!("item: \"{}\"", item.to_string());
-    "fn answer() -> u32 { 42 }".parse().unwrap()
+
+    item
 }
