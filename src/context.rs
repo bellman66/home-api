@@ -13,12 +13,8 @@ impl AxumRunner {
     pub fn new(addr: SocketAddr) -> AxumRunner {
         AxumRunner {
             addr,
-            router: Router::new()
+            router: Default::default(),
         }
-    }
-
-    fn chain(addr: SocketAddr, router: Router) -> Self {
-        Self {addr, router}
     }
 
     pub async fn run(self)  {
@@ -28,7 +24,8 @@ impl AxumRunner {
             .unwrap()
     }
 
-    pub fn add_route(mut self, path: &str, service: MethodRouter) -> Self {
-        Self { addr: self.addr, router: self.router.clone().route(path, service) }
+    pub fn add_route(mut self, path: &str, service: MethodRouter) -> AxumRunner {
+        self.router = self.router.route(path, service);
+        self
     }
 }

@@ -10,7 +10,9 @@ axum = "0.6.11"
 hyper = { version = "0.14.25", features = ["full"] }
 tokio = { version = "1.26.0", features = ["full"] }
 tower = "0.4.13"
+mongodb = "2.4.0"
 lazy_static = "1.4.0"
+
 
 [lib]
 proc-macro=true

@@ -7,6 +7,7 @@ mod context;
 mod domain;
 use domain::account;
 use std::collections::HashMap;
+use crate::domain::index;
 
 #[macro_use]
 extern crate lazy_static;
@@ -31,14 +32,8 @@ async fn main() {
 
     AxumRunner::new(addr)
         .add_route("/", get(root))
-        .add_route("/status", get(account::controller::accountcontroller::get_status))
+        .add_route("/status", get(index::controller::index_controller::get_status))
         .run().await;
-}
-
-fn get_router() -> Router {
-    Router::new()
-        .route("/", get(root))
-        .route("/status", get(account::controller::accountcontroller::get_status))
 }
 
 // basic handler that responds with a static string
